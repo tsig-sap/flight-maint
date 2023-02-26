@@ -1,50 +1,107 @@
 <edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
-        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI" />
     </edmx:Reference>
     <edmx:Reference Uri="/sap/opu/odata/sap/ZUI_FLIGHT_V2_SRV/$metadata">
-        <edmx:Include Namespace="ZUI_FLIGHT_V2_SRV" Alias="SAP"/>
+        <edmx:Include Namespace="ZUI_FLIGHT_V2_SRV" Alias="SAP" />
     </edmx:Reference>
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
             <Annotations Target="SAP.ZC_Flight_V2Type">
-                <Annotation Term="UI.LineItem" >
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="{@i18n>flight}" />
+                        <PropertyValue Property="TypeNamePlural" String="{@i18n>flights}" />
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="to_Airline/AirlineName" />
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="FlightNumber" />
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="Airline" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="FlightNumber"/>
+                            <PropertyValue Property="Value" Path="FlightNumber" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="FlightDate"/>
+                            <PropertyValue Property="Value" Path="FlightDate" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="Price"/>
+                            <PropertyValue Property="Value" Path="Price" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="PlaneType"/>
+                            <PropertyValue Property="Value" Path="PlaneType" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="SeatsMax"/>
+                            <PropertyValue Property="Value" Path="SeatsMax" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="SeatsOccupied"/>
+                            <PropertyValue Property="Value" Path="SeatsOccupied" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="PaymentSum"/>
+                            <PropertyValue Property="Value" Path="PaymentSum" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="SeatsMaxB"/>
+                            <PropertyValue Property="Value" Path="SeatsMaxB" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="SeatsOccupiedB"/>
+                            <PropertyValue Property="Value" Path="SeatsOccupiedB" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="SeatsMaxF"/>
+                            <PropertyValue Property="Value" Path="SeatsMaxF" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="SeatsOccupiedF"/>
+                            <PropertyValue Property="Value" Path="SeatsOccupiedF" />
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Airline</PropertyPath>
+                        <PropertyPath>FlightNumber</PropertyPath>
+                        <PropertyPath>FlightDate</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup" />
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Label" String="" />
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="FlightDate" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="PlaneType" />
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="{@i18n>generalInformation}" />
+                            <PropertyValue Property="Target" AnnotationPath="@UI.Identification" />
                         </Record>
                     </Collection>
                 </Annotation>
