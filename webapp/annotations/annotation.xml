@@ -74,11 +74,11 @@
                 <Annotation Term="UI.HeaderFacets">
                     <Collection>
                         <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup" />
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Header" />
                         </Record>
                     </Collection>
                 </Annotation>
-                <Annotation Term="UI.FieldGroup">
+                <Annotation Term="UI.FieldGroup" Qualifier="Header">
                     <Record Type="UI.FieldGroupType">
                         <PropertyValue Property="Label" String="" />
                         <PropertyValue Property="Data">
@@ -90,18 +90,107 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="Seats">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="SeatsMax" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="SeatsOccupied" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="SeatsMaxB" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="SeatsOccupiedB" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="SeatsMaxF" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="SeatsOccupiedF" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
                 <Annotation Term="UI.Identification">
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="PlaneType" />
                         </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="PaymentSum" />
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Price" />
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Currency" />
+                        </Record>
                     </Collection>
                 </Annotation>
                 <Annotation Term="UI.Facets">
                     <Collection>
+                        <Record Type="UI.CollectionFacet">
+                            <PropertyValue Property="Label" String="{@i18n>generalInformation}"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label"
+                                            String="{@i18n>generalInformation}" />
+                                        <PropertyValue Property="Target"
+                                            AnnotationPath="@UI.Identification" />
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="{@i18n>seats}"/>
+                                        <PropertyValue Property="Target"
+                                            AnnotationPath="@UI.FieldGroup#Seats" />
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
                         <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="Label" String="{@i18n>generalInformation}" />
-                            <PropertyValue Property="Target" AnnotationPath="@UI.Identification" />
+                            <PropertyValue Property="Target" AnnotationPath="to_Booking_V2/@UI.LineItem" />
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="SAP.ZC_Booking_V2Type">
+                <Annotation Term="UI.LineItem" >
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="BookingId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Customer"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="CustomerType"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Smoker"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="LuggageWeight"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Invoice"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Class"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="PriceForeignCurrency"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="PriceLocalCurrency"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="OrderDate"/>
                         </Record>
                     </Collection>
                 </Annotation>
