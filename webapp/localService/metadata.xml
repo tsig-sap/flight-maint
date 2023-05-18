@@ -87,7 +87,7 @@
                 <Property Name="FlightNumber" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Connection Number" sap:quickinfo="Flight Connection Number" sap:value-list="standard"/>
                 <Property Name="FlightDate" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:label="Flight Date" sap:quickinfo="Flight date"/>
                 <Property Name="Price" Type="Edm.Decimal" Precision="16" Scale="3" sap:unit="Currency" sap:label="Airfare"/>
-                <Property Name="Currency" Type="Edm.String" MaxLength="5" sap:label="Airline Currency" sap:quickinfo="Local currency of airline" sap:semantics="currency-code"/>
+                <Property Name="Currency" Type="Edm.String" MaxLength="5" sap:text="to_Currency/Currency_Text" sap:label="Airline Currency" sap:quickinfo="Local currency of airline" sap:value-list="standard" sap:semantics="currency-code"/>
                 <Property Name="PlaneType" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Plane Type" sap:quickinfo="Aircraft Type"/>
                 <Property Name="SeatsMax" Type="Edm.Int32" sap:label="Max. Capacity Econ." sap:quickinfo="Maximum Capacity in Economy Class"/>
                 <Property Name="SeatsOccupied" Type="Edm.Int32" sap:label="Occupied econ." sap:quickinfo="Occupied seats in economy class"/>
@@ -100,6 +100,20 @@
                 <NavigationProperty Name="to_Booking_V2" Relationship="ZUI_FLIGHT_V2_SRV.assoc_E32234E1B326B8F38E3A3F58B54D9A1E" FromRole="FromRole_assoc_E32234E1B326B8F38E3A3F58B54D9A1E" ToRole="ToRole_assoc_E32234E1B326B8F38E3A3F58B54D9A1E"/>
                 <NavigationProperty Name="to_Currency" Relationship="ZUI_FLIGHT_V2_SRV.assoc_79541AC68251BC9C4E87CA6DA73F8AE4" FromRole="FromRole_assoc_79541AC68251BC9C4E87CA6DA73F8AE4" ToRole="ToRole_assoc_79541AC68251BC9C4E87CA6DA73F8AE4"/>
             </EntityType>
+            <EntityType Name="ZC_VH_FlightNumberType" sap:label="Value Help for Flight Number" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Airline"/>
+                    <PropertyRef Name="FlightNumber"/>
+                </Key>
+                <Property Name="Airline" Type="Edm.String" Nullable="false" MaxLength="3" sap:display-format="UpperCase" sap:label="Airline" sap:quickinfo="Airline Code"/>
+                <Property Name="FlightNumber" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Connection Number" sap:quickinfo="Flight Connection Number"/>
+                <Property Name="CountryFrom" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Country/Region Key"/>
+                <Property Name="CityFrom" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Depart. city" sap:quickinfo="Departure city"/>
+                <Property Name="AirportFrom" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Departure airport"/>
+                <Property Name="CountryTo" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Country/Region Key"/>
+                <Property Name="CityTo" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Arrival city"/>
+                <Property Name="AirportTo" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Destination airport"/>
+            </EntityType>
             <EntityType Name="ZI_AirlineType" sap:label="Interface View for SCARR" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="Airline"/>
@@ -109,14 +123,6 @@
                 <Property Name="CurrencyCode" Type="Edm.String" MaxLength="5" sap:label="Airline Currency" sap:quickinfo="Local currency of airline" sap:semantics="currency-code"/>
                 <Property Name="Url" Type="Edm.String" MaxLength="255" sap:label="URL" sap:quickinfo="Airline URL"/>
             </EntityType>
-            <EntityType Name="ZI_FlightNumberVHType" sap:label="Interface Value Help FlightNumber" sap:value-list="true" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="Airline"/>
-                    <PropertyRef Name="FlightNumber"/>
-                </Key>
-                <Property Name="Airline" Type="Edm.String" Nullable="false" MaxLength="3" sap:display-format="UpperCase" sap:label="Airline" sap:quickinfo="Airline Code"/>
-                <Property Name="FlightNumber" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Connection Number" sap:quickinfo="Flight Connection Number"/>
-            </EntityType>
             <Association Name="assoc_E32234E1B326B8F38E3A3F58B54D9A1E" sap:content-version="1">
                 <End Type="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type" Multiplicity="1" Role="FromRole_assoc_E32234E1B326B8F38E3A3F58B54D9A1E"/>
                 <End Type="ZUI_FLIGHT_V2_SRV.ZC_Booking_V2Type" Multiplicity="*" Role="ToRole_assoc_E32234E1B326B8F38E3A3F58B54D9A1E"/>
@@ -124,6 +130,14 @@
             <Association Name="assoc_79541AC68251BC9C4E87CA6DA73F8AE4" sap:content-version="1">
                 <End Type="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type" Multiplicity="1" Role="FromRole_assoc_79541AC68251BC9C4E87CA6DA73F8AE4"/>
                 <End Type="ZUI_FLIGHT_V2_SRV.I_CurrencyType" Multiplicity="0..1" Role="ToRole_assoc_79541AC68251BC9C4E87CA6DA73F8AE4"/>
+                <ReferentialConstraint>
+                    <Principal Role="ToRole_assoc_79541AC68251BC9C4E87CA6DA73F8AE4">
+                        <PropertyRef Name="Currency"/>
+                    </Principal>
+                    <Dependent Role="FromRole_assoc_79541AC68251BC9C4E87CA6DA73F8AE4">
+                        <PropertyRef Name="Currency"/>
+                    </Dependent>
+                </ReferentialConstraint>
             </Association>
             <Association Name="assoc_A69B01AB2EB30B5ED3B3E8C0525D1531" sap:content-version="1">
                 <End Type="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type" Multiplicity="1" Role="FromRole_assoc_A69B01AB2EB30B5ED3B3E8C0525D1531"/>
@@ -132,9 +146,9 @@
             <EntityContainer Name="ZUI_FLIGHT_V2_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
                 <EntitySet Name="I_Currency" EntityType="ZUI_FLIGHT_V2_SRV.I_CurrencyType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
                 <EntitySet Name="ZC_Booking_V2" EntityType="ZUI_FLIGHT_V2_SRV.ZC_Booking_V2Type" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
-                <EntitySet Name="ZC_Flight_V2" EntityType="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZC_Flight_V2" EntityType="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZC_VH_FlightNumber" EntityType="ZUI_FLIGHT_V2_SRV.ZC_VH_FlightNumberType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
                 <EntitySet Name="ZI_Airline" EntityType="ZUI_FLIGHT_V2_SRV.ZI_AirlineType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
-                <EntitySet Name="ZI_FlightNumberVH" EntityType="ZUI_FLIGHT_V2_SRV.ZI_FlightNumberVHType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
                 <AssociationSet Name="assoc_E32234E1B326B8F38E3A3F58B54D9A1E" Association="ZUI_FLIGHT_V2_SRV.assoc_E32234E1B326B8F38E3A3F58B54D9A1E" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="ZC_Flight_V2" Role="FromRole_assoc_E32234E1B326B8F38E3A3F58B54D9A1E"/>
                     <End EntitySet="ZC_Booking_V2" Role="ToRole_assoc_E32234E1B326B8F38E3A3F58B54D9A1E"/>
@@ -177,8 +191,8 @@
             <Annotations Target="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type/FlightNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
                 <Annotation Term="Common.ValueList">
                     <Record>
-                        <PropertyValue Property="Label" String="Interface Value Help FlightNumber"/>
-                        <PropertyValue Property="CollectionPath" String="ZI_FlightNumberVH"/>
+                        <PropertyValue Property="Label" String="Value Help for Flight Number"/>
+                        <PropertyValue Property="CollectionPath" String="ZC_VH_FlightNumber"/>
                         <PropertyValue Property="SearchSupported" Bool="false"/>
                         <PropertyValue Property="Parameters">
                             <Collection>
@@ -189,6 +203,44 @@
                                 <Record Type="Common.ValueListParameterInOut">
                                     <PropertyValue Property="LocalDataProperty" PropertyPath="FlightNumber"/>
                                     <PropertyValue Property="ValueListProperty" String="FlightNumber"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="CountryFrom"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="CityFrom"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="AirportFrom"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="CountryTo"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="CityTo"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="AirportTo"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type/Currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Currency"/>
+                        <PropertyValue Property="CollectionPath" String="I_Currency"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Currency"/>
+                                    <PropertyValue Property="ValueListProperty" String="Currency"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Currency_Text"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>
