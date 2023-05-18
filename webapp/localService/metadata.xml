@@ -166,6 +166,7 @@
                     <Parameter Name="FlightNumber" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Connection Number"/>
                     <Parameter Name="FlightDate" Type="Edm.DateTime" Mode="In" Precision="0" sap:label="Flight Date"/>
                 </FunctionImport>
+                <FunctionImport Name="Purge" m:HttpMethod="POST"/>
             </EntityContainer>
             <Annotations Target="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type/Airline" xmlns="http://docs.oasis-open.org/odata/ns/edm">
                 <Annotation Term="Common.ValueList">

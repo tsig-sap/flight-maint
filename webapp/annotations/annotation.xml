@@ -73,6 +73,12 @@
                             <PropertyValue Property="Inline" Bool="false"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Purge"/>
+                            <PropertyValue Property="Action" String="ZUI_FLIGHT_V2_SRV.ZUI_FLIGHT_V2_SRV_Entities/Purge"/>
+                            <PropertyValue Property="Inline" Bool="false"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
                     </Collection>
                 </Annotation>
                 <Annotation Term="UI.SelectionFields">
