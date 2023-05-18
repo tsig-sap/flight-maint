@@ -146,7 +146,7 @@
             <EntityContainer Name="ZUI_FLIGHT_V2_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
                 <EntitySet Name="I_Currency" EntityType="ZUI_FLIGHT_V2_SRV.I_CurrencyType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
                 <EntitySet Name="ZC_Booking_V2" EntityType="ZUI_FLIGHT_V2_SRV.ZC_Booking_V2Type" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
-                <EntitySet Name="ZC_Flight_V2" EntityType="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="ZC_Flight_V2" EntityType="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type" sap:deletable="false" sap:content-version="1"/>
                 <EntitySet Name="ZC_VH_FlightNumber" EntityType="ZUI_FLIGHT_V2_SRV.ZC_VH_FlightNumberType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
                 <EntitySet Name="ZI_Airline" EntityType="ZUI_FLIGHT_V2_SRV.ZI_AirlineType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
                 <AssociationSet Name="assoc_E32234E1B326B8F38E3A3F58B54D9A1E" Association="ZUI_FLIGHT_V2_SRV.assoc_E32234E1B326B8F38E3A3F58B54D9A1E" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
@@ -161,6 +161,11 @@
                     <End EntitySet="ZC_Flight_V2" Role="FromRole_assoc_79541AC68251BC9C4E87CA6DA73F8AE4"/>
                     <End EntitySet="I_Currency" Role="ToRole_assoc_79541AC68251BC9C4E87CA6DA73F8AE4"/>
                 </AssociationSet>
+                <FunctionImport Name="FlagForDeletion" ReturnType="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type" EntitySet="ZC_Flight_V2" m:HttpMethod="POST" sap:action-for="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type">
+                    <Parameter Name="Airline" Type="Edm.String" Mode="In" MaxLength="3" sap:label="Airline"/>
+                    <Parameter Name="FlightNumber" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Connection Number"/>
+                    <Parameter Name="FlightDate" Type="Edm.DateTime" Mode="In" Precision="0" sap:label="Flight Date"/>
+                </FunctionImport>
             </EntityContainer>
             <Annotations Target="ZUI_FLIGHT_V2_SRV.ZC_Flight_V2Type/Airline" xmlns="http://docs.oasis-open.org/odata/ns/edm">
                 <Annotation Term="Common.ValueList">
